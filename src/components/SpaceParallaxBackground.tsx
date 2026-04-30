@@ -102,7 +102,7 @@ export function SpaceParallaxBackground({
             <div className="absolute inset-0" style={{ background: VOID }} />
 
             <div
-                className="absolute inset-[-15%] opacity-100"
+                className="absolute inset-[-40%] opacity-100"
                 style={nebulaStyle}
             />
 
@@ -210,6 +210,14 @@ export function SpaceParallaxBackground({
                     </g>
                 </svg>
             </div>
+
+            {/* Top fade — hides the hard edge when parallax layers shift down */}
+            <div
+                className="pointer-events-none absolute top-0 right-0 left-0 h-[min(35vh,280px)]"
+                style={{
+                    background: `linear-gradient(to bottom, ${VOID} 0%, rgba(11,16,32,0.55) 48%, transparent 100%)`,
+                }}
+            />
 
             {/* Scroll fade into solid void for lower sections */}
             <div
