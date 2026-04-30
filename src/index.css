@@ -1,0 +1,239 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "@fontsource-variable/geist";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  /* Portfolio palette: https: //coolors.co/palette/e63946-f1faee-a8dadc-457b9d-1d3557 */
+  --color-punch-red: #e63946;
+  --color-punch-red-100: #33060a;
+  --color-punch-red-200: #660d14;
+  --color-punch-red-300: #99131e;
+  --color-punch-red-400: #cb1928;
+  --color-punch-red-500: #e63946;
+  --color-punch-red-600: #eb5f6b;
+  --color-punch-red-700: #f08790;
+  --color-punch-red-800: #f5afb5;
+  --color-punch-red-900: #fad7da;
+
+  --color-honeydew: #f1faee;
+  --color-honeydew-100: #234c16;
+  --color-honeydew-200: #47982c;
+  --color-honeydew-300: #75ce57;
+  --color-honeydew-400: #b4e4a3;
+  --color-honeydew-500: #f1faee;
+  --color-honeydew-600: #f5fbf2;
+  --color-honeydew-700: #f7fcf6;
+  --color-honeydew-800: #fafdf9;
+  --color-honeydew-900: #fcfefc;
+
+  --color-frosted-blue: #a8dadc;
+  --color-frosted-blue-100: #163637;
+  --color-frosted-blue-200: #2c6d6f;
+  --color-frosted-blue-300: #42a3a6;
+  --color-frosted-blue-400: #70c3c6;
+  --color-frosted-blue-500: #a8dadc;
+  --color-frosted-blue-600: #b9e2e3;
+  --color-frosted-blue-700: #cae9ea;
+  --color-frosted-blue-800: #dcf0f1;
+  --color-frosted-blue-900: #edf8f8;
+
+  --color-cerulean: #457b9d;
+  --color-cerulean-100: #0e181f;
+  --color-cerulean-200: #1b313e;
+  --color-cerulean-300: #29495e;
+  --color-cerulean-400: #37627d;
+  --color-cerulean-500: #457b9d;
+  --color-cerulean-600: #6097b9;
+  --color-cerulean-700: #88b1cb;
+  --color-cerulean-800: #b0cbdc;
+  --color-cerulean-900: #d7e5ee;
+
+  --color-oxford-navy: #1d3557;
+  --color-oxford-navy-100: #060b12;
+  --color-oxford-navy-200: #0c1623;
+  --color-oxford-navy-300: #122035;
+  --color-oxford-navy-400: #172b46;
+  --color-oxford-navy-500: #1d3557;
+  --color-oxford-navy-600: #315a93;
+  --color-oxford-navy-700: #4e7fc4;
+  --color-oxford-navy-800: #89aad8;
+  --color-oxford-navy-900: #c4d4eb;
+
+  /* shadcn ↔ theme */
+  --font-heading: var(--font-sans);
+  --font-sans: 'Geist Variable', sans-serif;
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+:root {
+  --radius: 0.625rem;
+  /* Hero diamond vertical center — sync with PortfolioBackground SVG `top` */
+  --diamond-center-y: 42svh;
+
+  --background: #f1faee;
+  --foreground: #1d3557;
+
+  --card: #fcfefc;
+  --card-foreground: #1d3557;
+
+  --popover: #fcfefc;
+  --popover-foreground: #1d3557;
+
+  --primary: #e63946;
+  --primary-foreground: #f1faee;
+
+  --secondary: #a8dadc;
+  --secondary-foreground: #1d3557;
+
+  --muted: #f5fbf2;
+  --muted-foreground: #37627d;
+
+  --accent: #a8dadc;
+  --accent-foreground: #1d3557;
+
+  --destructive: #cb1928;
+  --border: #70c3c6;
+  --input: #b9e2e3;
+  --ring: #457b9d;
+
+  --chart-1: #e63946;
+  --chart-2: #457b9d;
+  --chart-3: #a8dadc;
+  --chart-4: #6097b9;
+  --chart-5: #1d3557;
+
+  --sidebar: #f5fbf2;
+  --sidebar-foreground: #1d3557;
+  --sidebar-primary: #e63946;
+  --sidebar-primary-foreground: #f1faee;
+  --sidebar-accent: #a8dadc;
+  --sidebar-accent-foreground: #1d3557;
+  --sidebar-border: #70c3c6;
+  --sidebar-ring: #457b9d;
+
+  color-scheme: light;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.dark {
+  --background: #122035;
+  --foreground: #f1faee;
+
+  --card: #172b46;
+  --card-foreground: #f1faee;
+
+  --popover: #172b46;
+  --popover-foreground: #f1faee;
+
+  --primary: #eb5f6b;
+  --primary-foreground: #060b12;
+
+  --secondary: #2c6d6f;
+  --secondary-foreground: #edf8f8;
+
+  --muted: #1b313e;
+  --muted-foreground: #b0cbdc;
+
+  --accent: #2c6d6f;
+  --accent-foreground: #edf8f8;
+
+  --destructive: #f08790;
+  --border: #37627d;
+  --input: #29495e;
+  --ring: #88b1cb;
+
+  --chart-1: #eb5f6b;
+  --chart-2: #88b1cb;
+  --chart-3: #42a3a6;
+  --chart-4: #6097b9;
+  --chart-5: #f1faee;
+
+  --sidebar: #0c1623;
+  --sidebar-foreground: #f1faee;
+  --sidebar-primary: #eb5f6b;
+  --sidebar-primary-foreground: #060b12;
+  --sidebar-accent: #29495e;
+  --sidebar-accent-foreground: #edf8f8;
+  --sidebar-border: #37627d;
+  --sidebar-ring: #88b1cb;
+}
+
+/* Headshot center = diamond center: pt = centerY − half headshot (size-36 4.5rem, sm:size-44 5.5rem) */
+.hero-intro {
+  padding-top: calc(var(--diamond-center-y) - 4.5rem);
+  padding-bottom: 5rem;
+}
+
+@media (min-width: 640px) {
+  .hero-intro {
+    padding-top: calc(var(--diamond-center-y) - 5.5rem);
+  }
+}
+
+#root {
+  min-height: 100svh;
+  max-width: 56rem;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
+  }
+}
