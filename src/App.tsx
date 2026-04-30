@@ -1,4 +1,4 @@
-import { PortfolioBackground } from "@/components/PortfolioBackground";
+import { SpaceParallaxBackground } from "@/components/SpaceParallaxBackground";
 import type { SVGProps } from "react";
 import { useEffect, useRef, useState } from "react";
 import cohortfinderThumb from "./assets/cohortfinder.png";
@@ -122,7 +122,7 @@ const PROJECTS: {
 
 /** Padding, border, and content width — keep About and Projects in sync */
 const SECTION_SHELL =
-    "relative border border-frosted-blue-400/60 bg-honeydew/85 px-8 py-16 backdrop-blur-sm sm:px-10 sm:py-20";
+    "relative border border-white/10 bg-space-card/88 px-8 py-16 backdrop-blur-xl sm:px-10 sm:py-20";
 const SECTION_INNER = "mx-auto max-w-4xl text-left";
 
 const NAV_ITEMS = [
@@ -131,9 +131,9 @@ const NAV_ITEMS = [
     { label: "Projects", href: "#projects" },
 ] as const;
 
-/** Floating pill — honeydew + frosted blue chrome; punch-red on hover */
+/** Floating pill — glass on void; ion accent on hover */
 const NAV_PILL_LINK =
-    "inline-flex shrink-0 items-center rounded-full px-4 py-2 text-sm font-medium text-oxford-navy/90 transition-colors hover:bg-punch-red/12 hover:text-punch-red focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cerulean-500 sm:px-5";
+    "inline-flex shrink-0 items-center rounded-full px-4 py-2 text-sm font-medium text-zinc-200 transition-colors hover:bg-white/10 hover:text-ion-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ion-400 sm:px-5";
 
 function LinkedInIcon(props: SVGProps<SVGSVGElement>) {
     return (
@@ -180,10 +180,10 @@ function GitHubIcon(props: SVGProps<SVGSVGElement>) {
 }
 
 const projectCtaClassMedia =
-    "inline-flex w-full items-center justify-center gap-2 rounded-full border border-frosted-blue-400/80 bg-transparent px-4 py-2.5 text-sm font-medium text-oxford-navy transition-colors hover:border-cerulean-500 hover:bg-frosted-blue-400/20 hover:text-cerulean-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cerulean-500";
+    "inline-flex w-full items-center justify-center gap-2 rounded-full border border-white/15 bg-transparent px-4 py-2.5 text-sm font-medium text-zinc-100 transition-colors hover:border-ion-400/50 hover:bg-ion-400/10 hover:text-ion-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ion-400";
 
 const projectCtaClassFallback =
-    "inline-flex w-full max-w-xs items-center justify-center gap-2 rounded-full border border-frosted-blue-400/80 bg-transparent px-4 py-2.5 text-sm font-medium text-oxford-navy transition-colors hover:border-cerulean-500 hover:bg-frosted-blue-400/20 hover:text-cerulean-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cerulean-500";
+    "inline-flex w-full max-w-xs items-center justify-center gap-2 rounded-full border border-white/15 bg-transparent px-4 py-2.5 text-sm font-medium text-zinc-100 transition-colors hover:border-ion-400/50 hover:bg-ion-400/10 hover:text-ion-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ion-400";
 
 function ProjectCtaLink({
     href,
@@ -288,25 +288,25 @@ function App() {
 
     return (
         <>
-            <PortfolioBackground parallaxY={scrollY} />
+            <SpaceParallaxBackground scrollY={scrollY} />
             {openVideo ? (
                 <div
-                    className="fixed inset-0 z-50 flex items-center justify-center bg-oxford-navy/80 p-4 backdrop-blur-sm"
+                    className="fixed inset-0 z-50 flex items-center justify-center bg-space-void/85 p-4 backdrop-blur-md"
                     role="presentation"
                     onClick={() => setOpenVideo(null)}
                 >
                     <div
-                        className="relative w-full max-w-4xl overflow-hidden border border-frosted-blue-400/50 bg-honeydew shadow-lg"
+                        className="relative w-full max-w-4xl overflow-hidden border border-white/15 bg-space-card shadow-xl shadow-black/40"
                         role="dialog"
                         aria-modal="true"
                         aria-label="Video demo"
                         onClick={(e) => e.stopPropagation()}
                     >
-                        <div className="flex justify-end bg-honeydew px-2 py-2 sm:px-3">
+                        <div className="flex justify-end bg-space-card px-2 py-2 sm:px-3">
                             <button
                                 type="button"
                                 aria-label="Close video"
-                                className="inline-flex size-9 shrink-0 items-center justify-center rounded-full text-oxford-navy transition-colors hover:bg-frosted-blue-400/35 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cerulean-500"
+                                className="inline-flex size-9 shrink-0 items-center justify-center rounded-full text-zinc-300 transition-colors hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ion-400"
                                 onClick={() => setOpenVideo(null)}
                             >
                                 <CloseIcon className="size-5" />
@@ -338,7 +338,7 @@ function App() {
             ) : null}
             <header className="pointer-events-none fixed top-0 right-0 left-0 z-40 flex justify-center px-4 pt-4 sm:pt-5">
                 <nav
-                    className="pointer-events-auto flex max-w-[min(100%,28rem)] items-center overflow-x-auto rounded-full border border-frosted-blue-400/55 bg-honeydew/95 shadow-[0_10px_36px_rgba(230,57,70,0.08),0_4px_18px_rgba(29,53,87,0.08)] backdrop-blur-sm [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:max-w-none"
+                    className="pointer-events-auto flex max-w-[min(100%,28rem)] items-center overflow-x-auto rounded-full border border-white/12 bg-space-card/92 shadow-[0_12px_40px_rgba(0,0,0,0.45),0_0_0_1px_rgba(255,255,255,0.06)_inset] backdrop-blur-xl [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:max-w-none"
                     aria-label="Primary"
                 >
                     <ul className="flex w-full min-w-0 list-none items-center justify-center gap-0.5 py-1 pr-1 pl-1 sm:gap-1 sm:py-1.5 sm:pr-2 sm:pl-2">
@@ -360,14 +360,14 @@ function App() {
                     <img
                         src={headshot}
                         alt="Georgia Martinez"
-                        className="size-36 rounded-full object-cover shadow-lg ring-4 ring-frosted-blue-500 ring-offset-4 ring-offset-honeydew sm:size-44"
+                        className="size-36 rounded-full object-cover shadow-[0_8px_32px_rgba(0,0,0,0.5)] ring-4 ring-ion-400/35 ring-offset-4 ring-offset-transparent sm:size-44"
                     />
 
                     <div className="max-w-xl space-y-2 sm:space-y-3">
-                        <h1 className="text-balance font-heading text-3xl font-semibold tracking-tight text-oxford-navy sm:text-4xl md:text-5xl">
+                        <h1 className="text-gradient-ion text-balance font-heading text-3xl font-semibold tracking-tight sm:text-4xl md:text-5xl">
                             Georgia Martinez
                         </h1>
-                        <p className="text-pretty text-xl text-oxford-navy/85 sm:text-2xl">
+                        <p className="text-pretty text-xl text-zinc-300 sm:text-2xl">
                             Full Stack Software Engineer
                         </p>
                     </div>
@@ -377,7 +377,7 @@ function App() {
                             href={LINKEDIN_URL}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex size-14 items-center justify-center rounded-full bg-oxford-navy text-honeydew shadow-md transition-colors hover:bg-punch-red focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cerulean-500"
+                            className="flex size-14 items-center justify-center rounded-full border border-white/15 bg-white/8 text-zinc-100 shadow-lg transition-colors hover:border-coral/50 hover:bg-coral hover:text-space-void focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ion-400"
                             aria-label="Georgia Martinez on LinkedIn"
                         >
                             <LinkedInIcon className="size-7 origin-center scale-[0.82]" />
@@ -386,7 +386,7 @@ function App() {
                             href={GITHUB_URL}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex size-14 items-center justify-center rounded-full bg-oxford-navy text-honeydew shadow-md transition-colors hover:bg-punch-red focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cerulean-500"
+                            className="flex size-14 items-center justify-center rounded-full border border-white/15 bg-white/8 text-zinc-100 shadow-lg transition-colors hover:border-coral/50 hover:bg-coral hover:text-space-void focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ion-400"
                             aria-label="Georgia Martinez on GitHub"
                         >
                             <GitHubIcon className="size-7 origin-center scale-[1.1]" />
@@ -394,24 +394,22 @@ function App() {
                     </div>
                 </section>
 
-                <section
-                    id="about"
-                    className={`scroll-mt-20 ${SECTION_SHELL}`}
-                >
+                <section id="about" className={`scroll-mt-20 ${SECTION_SHELL}`}>
                     <div className={SECTION_INNER}>
-                        <h2 className="font-heading text-2xl font-semibold tracking-tight text-oxford-navy sm:text-3xl">
+                        <h2 className="font-heading text-2xl font-semibold tracking-tight text-zinc-100 sm:text-3xl">
                             Howdy! 👋🏼
                         </h2>
-                        <div className="mt-6 space-y-4 text-base leading-relaxed text-oxford-navy/90 sm:text-lg">
+                        <div className="mt-6 space-y-4 text-base leading-relaxed text-zinc-300 sm:text-lg">
                             <p>
-                                My name is Georgia and I have over two years of experience in software development.
+                                My name is Georgia and I have over two years of
+                                experience in software development.
                             </p>
                             <p>
                                 I'm currently working as a Software Developer &
                                 Consultant at{" "}
                                 <a
                                     href="https://atomicobject.com/"
-                                    className="font-medium text-cerulean-600 underline decoration-frosted-blue-500 decoration-2 underline-offset-4 transition-colors hover:text-punch-red"
+                                    className="font-medium text-ion-400 underline decoration-ion-400/40 decoration-2 underline-offset-4 transition-colors hover:text-coral"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                 >
@@ -422,7 +420,8 @@ function App() {
                                 clients.
                             </p>
                             <p>
-                                I graduated with a B.S. in Computer Science from Case Western Reserve University in 2024.
+                                I graduated with a B.S. in Computer Science from
+                                Case Western Reserve University in 2024.
                             </p>
                             <p>
                                 Outside of work, you'll find me jamming on keys
@@ -442,11 +441,11 @@ function App() {
                     <div className={SECTION_INNER}>
                         <h2
                             id="projects-heading"
-                            className="font-heading text-2xl font-semibold tracking-tight text-oxford-navy sm:text-3xl"
+                            className="font-heading text-2xl font-semibold tracking-tight text-zinc-100 sm:text-3xl"
                         >
-                            Projects 💻
+                            Projects 👩🏻‍💻
                         </h2>
-                        <p className="mt-4 text-base leading-relaxed text-oxford-navy/90 sm:text-lg">
+                        <p className="mt-4 text-base leading-relaxed text-zinc-300 sm:text-lg">
                             I love building cool software. Check out my awesome
                             projects below!
                         </p>
@@ -456,167 +455,177 @@ function App() {
                                     ? youtubeVideoIdFromUrl(project.video)
                                     : null;
                                 return (
-                                <li
-                                    key={project.title}
-                                    className="border border-frosted-blue-400/50 bg-honeydew/90 p-6 shadow-sm sm:p-8"
-                                >
-                                    <div
-                                        className={
-                                            project.image || project.video
-                                                ? "flex flex-col gap-6 sm:flex-row sm:items-stretch sm:gap-8"
-                                                : undefined
-                                        }
+                                    <li
+                                        key={project.title}
+                                        className="border border-white/10 bg-space-card/90 p-6 shadow-[0_4px_24px_rgba(0,0,0,0.35)] sm:p-8"
                                     >
-                                        {project.image || project.video ? (
-                                            <div className="flex min-h-0 shrink-0 flex-col self-stretch sm:w-52 md:w-60">
-                                                <div className="shrink-0">
-                                                    {project.video ? (
-                                                        <button
-                                                            type="button"
-                                                            className="group relative w-full overflow-hidden border border-frosted-blue-400/50"
-                                                            onClick={() => {
-                                                                if (ytPreviewId) {
-                                                                    setOpenVideo(
-                                                                        {
-                                                                            kind: "youtube",
-                                                                            videoId:
-                                                                                ytPreviewId,
-                                                                        },
-                                                                    );
-                                                                } else {
-                                                                    setOpenVideo(
-                                                                        {
-                                                                            kind: "file",
-                                                                            src: project.video!,
-                                                                        },
-                                                                    );
-                                                                }
-                                                            }}
-                                                            aria-label="Play demo video"
-                                                        >
-                                                            {ytPreviewId ? (
-                                                                <img
-                                                                    src={`https://i.ytimg.com/vi/${ytPreviewId}/hqdefault.jpg`}
-                                                                    alt=""
-                                                                    className="pointer-events-none aspect-video w-full object-cover"
-                                                                />
-                                                            ) : (
-                                                                <video
-                                                                    src={
-                                                                        project.video
+                                        <div
+                                            className={
+                                                project.image || project.video
+                                                    ? "flex flex-col gap-6 sm:flex-row sm:items-stretch sm:gap-8"
+                                                    : undefined
+                                            }
+                                        >
+                                            {project.image || project.video ? (
+                                                <div className="flex min-h-0 shrink-0 flex-col self-stretch sm:w-52 md:w-60">
+                                                    <div className="shrink-0">
+                                                        {project.video ? (
+                                                            <button
+                                                                type="button"
+                                                                className="group relative w-full overflow-hidden border border-white/12"
+                                                                onClick={() => {
+                                                                    if (
+                                                                        ytPreviewId
+                                                                    ) {
+                                                                        setOpenVideo(
+                                                                            {
+                                                                                kind: "youtube",
+                                                                                videoId:
+                                                                                    ytPreviewId,
+                                                                            }
+                                                                        );
+                                                                    } else {
+                                                                        setOpenVideo(
+                                                                            {
+                                                                                kind: "file",
+                                                                                src: project.video!,
+                                                                            }
+                                                                        );
                                                                     }
-                                                                    className="pointer-events-none aspect-video w-full object-cover"
-                                                                    muted
-                                                                    playsInline
-                                                                    preload="metadata"
-                                                                />
-                                                            )}
-                                                            <span
-                                                                className="absolute inset-0 flex items-center justify-center bg-oxford-navy/30 transition-colors group-hover:bg-oxford-navy/40"
-                                                                aria-hidden
+                                                                }}
+                                                                aria-label="Play demo video"
                                                             >
-                                                                <span className="flex size-16 items-center justify-center rounded-full bg-honeydew/70 text-oxford-navy shadow-lg transition-transform group-hover:scale-105 group-hover:bg-honeydew/85">
-                                                                    <PlayIcon className="size-7 translate-x-0.5" />
+                                                                {ytPreviewId ? (
+                                                                    <img
+                                                                        src={`https://i.ytimg.com/vi/${ytPreviewId}/hqdefault.jpg`}
+                                                                        alt=""
+                                                                        className="pointer-events-none aspect-video w-full object-cover"
+                                                                    />
+                                                                ) : (
+                                                                    <video
+                                                                        src={
+                                                                            project.video
+                                                                        }
+                                                                        className="pointer-events-none aspect-video w-full object-cover"
+                                                                        muted
+                                                                        playsInline
+                                                                        preload="metadata"
+                                                                    />
+                                                                )}
+                                                                <span
+                                                                    className="absolute inset-0 flex items-center justify-center bg-black/45 transition-colors group-hover:bg-black/55"
+                                                                    aria-hidden
+                                                                >
+                                                                    <span className="flex size-16 items-center justify-center rounded-full bg-white/92 text-space-void shadow-lg transition-transform group-hover:scale-105 group-hover:bg-white">
+                                                                        <PlayIcon className="size-7 translate-x-0.5" />
+                                                                    </span>
                                                                 </span>
-                                                            </span>
-                                                        </button>
-                                                    ) : (
-                                                        <img
-                                                            src={project.image}
-                                                            alt={
-                                                                project.imageAlt ??
-                                                                ""
-                                                            }
-                                                            className="w-full border border-frosted-blue-400/50 object-cover object-left"
-                                                        />
-                                                    )}
-                                                </div>
-                                                {project.href ||
-                                                project.hrefSecondary ? (
-                                                    <>
-                                                        <div
-                                                            className="hidden min-h-0 flex-1 sm:block"
-                                                            aria-hidden
-                                                        />
-                                                        <div className="shrink-0">
-                                                            <ProjectCtaGroup
-                                                                href={
-                                                                    project.href
+                                                            </button>
+                                                        ) : (
+                                                            <img
+                                                                src={
+                                                                    project.image
                                                                 }
-                                                                hrefLabel={
-                                                                    project.hrefLabel
+                                                                alt={
+                                                                    project.imageAlt ??
+                                                                    ""
                                                                 }
-                                                                hrefSecondary={
-                                                                    project.hrefSecondary
-                                                                }
-                                                                hrefSecondaryLabel={
-                                                                    project.hrefSecondaryLabel
-                                                                }
-                                                                className={
-                                                                    projectCtaClassMedia
-                                                                }
+                                                                className="w-full border border-white/10 object-cover object-left"
                                                             />
-                                                        </div>
-                                                    </>
+                                                        )}
+                                                    </div>
+                                                    {project.href ||
+                                                    project.hrefSecondary ? (
+                                                        <>
+                                                            <div
+                                                                className="hidden min-h-0 flex-1 sm:block"
+                                                                aria-hidden
+                                                            />
+                                                            <div className="shrink-0">
+                                                                <ProjectCtaGroup
+                                                                    href={
+                                                                        project.href
+                                                                    }
+                                                                    hrefLabel={
+                                                                        project.hrefLabel
+                                                                    }
+                                                                    hrefSecondary={
+                                                                        project.hrefSecondary
+                                                                    }
+                                                                    hrefSecondaryLabel={
+                                                                        project.hrefSecondaryLabel
+                                                                    }
+                                                                    className={
+                                                                        projectCtaClassMedia
+                                                                    }
+                                                                />
+                                                            </div>
+                                                        </>
+                                                    ) : null}
+                                                </div>
+                                            ) : null}
+                                            <div className="min-w-0 flex-1">
+                                                <h3 className="font-heading text-lg font-semibold text-zinc-100 sm:text-xl">
+                                                    {project.title}
+                                                </h3>
+                                                {project.meta ? (
+                                                    <p className="mt-1 text-sm text-zinc-400 sm:text-base">
+                                                        {project.meta}
+                                                    </p>
+                                                ) : null}
+                                                <p className="mt-3 text-base leading-relaxed text-zinc-300 sm:text-lg">
+                                                    {project.description}
+                                                </p>
+                                                {project.skills &&
+                                                project.skills.length > 0 ? (
+                                                    <div className="mt-4">
+                                                        <p className="text-xs font-medium tracking-wide text-zinc-500 uppercase">
+                                                            Skills
+                                                        </p>
+                                                        <ul className="mt-2 flex list-none flex-wrap gap-2 p-0">
+                                                            {project.skills.map(
+                                                                (skill) => (
+                                                                    <li
+                                                                        key={
+                                                                            skill
+                                                                        }
+                                                                    >
+                                                                        <span className="inline-block border border-white/12 bg-white/5 px-2.5 py-1 text-sm text-zinc-300">
+                                                                            {
+                                                                                skill
+                                                                            }
+                                                                        </span>
+                                                                    </li>
+                                                                )
+                                                            )}
+                                                        </ul>
+                                                    </div>
+                                                ) : null}
+                                                {(project.href ||
+                                                    project.hrefSecondary) &&
+                                                !project.image &&
+                                                !project.video ? (
+                                                    <div className="mt-4">
+                                                        <ProjectCtaGroup
+                                                            href={project.href}
+                                                            hrefLabel={
+                                                                project.hrefLabel
+                                                            }
+                                                            hrefSecondary={
+                                                                project.hrefSecondary
+                                                            }
+                                                            hrefSecondaryLabel={
+                                                                project.hrefSecondaryLabel
+                                                            }
+                                                            className={
+                                                                projectCtaClassFallback
+                                                            }
+                                                        />
+                                                    </div>
                                                 ) : null}
                                             </div>
-                                        ) : null}
-                                        <div className="min-w-0 flex-1">
-                                            <h3 className="font-heading text-lg font-semibold text-oxford-navy sm:text-xl">
-                                                {project.title}
-                                            </h3>
-                                            {project.meta ? (
-                                                <p className="mt-1 text-sm text-oxford-navy/75 sm:text-base">
-                                                    {project.meta}
-                                                </p>
-                                            ) : null}
-                                            <p className="mt-3 text-base leading-relaxed text-oxford-navy/90 sm:text-lg">
-                                                {project.description}
-                                            </p>
-                                            {project.skills &&
-                                            project.skills.length > 0 ? (
-                                                <div className="mt-4">
-                                                    <p className="text-xs font-medium tracking-wide text-oxford-navy/60 uppercase">
-                                                        Skills
-                                                    </p>
-                                                    <ul className="mt-2 flex list-none flex-wrap gap-2 p-0">
-                                                        {project.skills.map(
-                                                            (skill) => (
-                                                                <li key={skill}>
-                                                                    <span className="inline-block border border-frosted-blue-400/60 bg-honeydew/80 px-2.5 py-1 text-sm text-oxford-navy/90">
-                                                                        {skill}
-                                                                    </span>
-                                                                </li>
-                                                            )
-                                                        )}
-                                                    </ul>
-                                                </div>
-                                            ) : null}
-                                            {(project.href ||
-                                                project.hrefSecondary) &&
-                                            !project.image &&
-                                            !project.video ? (
-                                                <div className="mt-4">
-                                                    <ProjectCtaGroup
-                                                        href={project.href}
-                                                        hrefLabel={
-                                                            project.hrefLabel
-                                                        }
-                                                        hrefSecondary={
-                                                            project.hrefSecondary
-                                                        }
-                                                        hrefSecondaryLabel={
-                                                            project.hrefSecondaryLabel
-                                                        }
-                                                        className={
-                                                            projectCtaClassFallback
-                                                        }
-                                                    />
-                                                </div>
-                                            ) : null}
                                         </div>
-                                    </div>
-                                </li>
+                                    </li>
                                 );
                             })}
                         </ul>
