@@ -1,4 +1,4 @@
-import { SpaceParallaxBackground } from "@/components/SpaceParallaxBackground";
+import { SpaceParallaxBackground } from "./SpaceParallaxBackground";
 import type { SVGProps } from "react";
 import { useEffect, useRef, useState } from "react";
 import cohortfinderThumb from "./assets/cohortfinder.png";
@@ -128,9 +128,76 @@ const SECTION_SHELL =
     "relative border border-white/10 bg-space-card/88 px-8 py-16 backdrop-blur-xl sm:px-10 sm:py-20";
 const SECTION_INNER = "mx-auto max-w-4xl text-left";
 
+/** Devicon assets via jsDelivr — https://devicon.dev */
+const SKILL_ICONS = [
+    {
+        name: "TypeScript",
+        iconSrc: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
+    },
+    {
+        name: "JavaScript",
+        iconSrc: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
+    },
+    {
+        name: "Kotlin",
+        iconSrc: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kotlin/kotlin-original.svg",
+    },
+    {
+        name: "Java",
+        iconSrc: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg",
+    },
+    {
+        name: "Python",
+        iconSrc: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
+    },
+    {
+        name: "HTML",
+        iconSrc: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg",
+    },
+    {
+        name: "CSS",
+        iconSrc: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg",
+    },
+    {
+        name: "React",
+        iconSrc: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
+    },
+    {
+        name: "Next.js",
+        iconSrc: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg",
+    },
+    {
+        name: "Docker",
+        iconSrc: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg",
+    },
+] as const;
+
+function SkillIcon({
+    src,
+    title,
+}: {
+    src: string;
+    title: string;
+}) {
+    return (
+        <div className="flex min-h-[3rem] w-full flex-1 items-center justify-center p-2 sm:min-h-[3.25rem]">
+            <img
+                src={src}
+                alt=""
+                className="h-11 w-11 object-contain sm:h-12 sm:w-12"
+                loading="lazy"
+                decoding="async"
+                referrerPolicy="no-referrer"
+                title={title}
+            />
+        </div>
+    );
+}
+
 const NAV_ITEMS = [
-    { label: "Home", href: "#top" },
+    { label: "Home", href: "#home" },
     { label: "About", href: "#about" },
+    { label: "Skills", href: "#skills" },
     { label: "Projects", href: "#projects" },
 ] as const;
 
@@ -365,7 +432,7 @@ function App() {
             </header>
             <main className="relative z-10 w-full">
                 <section
-                    id="top"
+                    id="home"
                     className="hero-intro flex min-h-svh flex-col px-6 pt-[max(5.25rem,env(safe-area-inset-top,0px))] text-center sm:pt-[5.75rem]"
                 >
                     <div className="flex min-h-0 flex-1 flex-col items-center justify-center gap-10 sm:gap-12 translate-y-[var(--hero-diamond-nudge)]">
@@ -451,6 +518,33 @@ function App() {
                                 or burried in a good book.
                             </p>
                         </div>
+                    </div>
+                </section>
+
+                <section
+                    id="skills"
+                    className={`scroll-mt-20 ${SECTION_SHELL} mt-12 sm:mt-16`}
+                    aria-labelledby="skills-heading"
+                >
+                    <div className={SECTION_INNER}>
+                        <h2
+                            id="skills-heading"
+                            className="font-heading text-2xl font-semibold tracking-tight text-section-gold sm:text-3xl"
+                        >
+                            Skills 🛠️
+                        </h2>
+                        <ul className="mt-8 grid list-none grid-cols-2 gap-3 p-0 sm:mt-10 sm:grid-cols-3 sm:gap-4 lg:grid-cols-5">
+                            {SKILL_ICONS.map(({ name, iconSrc }) => (
+                                <li key={name}>
+                                    <div className="flex aspect-square min-h-0 flex-col items-stretch justify-between gap-1 border border-white/10 bg-space-elevated/90 px-2 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] transition-colors hover:border-ion-400/25 hover:bg-space-elevated sm:px-3 sm:py-4">
+                                        <SkillIcon src={iconSrc} title={name} />
+                                        <span className="px-1 text-center text-[0.65rem] font-semibold tracking-wider text-zinc-200 uppercase sm:text-xs">
+                                            {name}
+                                        </span>
+                                    </div>
+                                </li>
+                            ))}
+                        </ul>
                     </div>
                 </section>
 
