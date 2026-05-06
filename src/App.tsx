@@ -1,6 +1,12 @@
 import { SpaceParallaxBackground } from "./SpaceParallaxBackground";
 import type { SVGProps } from "react";
-import { useEffect, useRef, useState } from "react";
+import {
+    useCallback,
+    useEffect,
+    useLayoutEffect,
+    useRef,
+    useState,
+} from "react";
 import cohortfinderThumb from "./assets/cohortfinder.png";
 import headshot from "./assets/headshot.png";
 import mandarinThumb from "./assets/mandarin.png";
@@ -39,6 +45,11 @@ function youtubeVideoIdFromUrl(url: string): string | null {
 type OpenVideo =
     | { kind: "file"; src: string }
     | { kind: "youtube"; videoId: string };
+
+type OpenImage = { src: string; alt: string };
+
+const MEDIA_MODAL_BACKDROP =
+    "fixed inset-0 z-50 flex items-center justify-center bg-space-void/45 p-4 backdrop-blur-sm backdrop-saturate-50";
 
 const PROJECTS: {
     title: string;
@@ -329,7 +340,14 @@ function ProjectCtaGroup({
 function App() {
     const [scrollY, setScrollY] = useState(0);
     const [openVideo, setOpenVideo] = useState<OpenVideo | null>(null);
+    const [openImage, setOpenImage] = useState<OpenImage | null>(null);
     const modalVideoRef = useRef<HTMLVideoElement>(null);
+    const heroHeadshotAnchorRef = useRef<HTMLDivElement>(null);
+    /** Fallback matches star-field hole (`excludeSpecksUnderHeroHeadshot`) until layout runs */
+    const [heroDiamondAnchorPct, setHeroDiamondAnchorPct] = useState({
+        x: 50,
+        y: 43,
+    });
 
     useEffect(() => {
         const onScroll = () => setScrollY(window.scrollY);
@@ -337,6 +355,32 @@ function App() {
         window.addEventListener("scroll", onScroll, { passive: true });
         return () => window.removeEventListener("scroll", onScroll);
     }, []);
+
+    const measureHeroDiamondAnchor = useCallback(() => {
+        const el = heroHeadshotAnchorRef.current;
+        if (!el) return;
+        const r = el.getBoundingClientRect();
+        const vw = window.innerWidth;
+        const vh = window.innerHeight;
+        if (vw <= 0 || vh <= 0) return;
+        setHeroDiamondAnchorPct({
+            x: ((r.left + r.width / 2) / vw) * 100,
+            y: ((r.top + r.height / 2) / vh) * 100,
+        });
+    }, []);
+
+    useLayoutEffect(() => {
+        measureHeroDiamondAnchor();
+        window.addEventListener("resize", measureHeroDiamondAnchor);
+        const vv = window.visualViewport;
+        vv?.addEventListener("resize", measureHeroDiamondAnchor);
+        vv?.addEventListener("scroll", measureHeroDiamondAnchor);
+        return () => {
+            window.removeEventListener("resize", measureHeroDiamondAnchor);
+            vv?.removeEventListener("resize", measureHeroDiamondAnchor);
+            vv?.removeEventListener("scroll", measureHeroDiamondAnchor);
+        };
+    }, [measureHeroDiamondAnchor]);
 
     useEffect(() => {
         const el = modalVideoRef.current;
@@ -351,9 +395,12 @@ function App() {
     }, [openVideo]);
 
     useEffect(() => {
-        if (!openVideo) return;
+        if (!openVideo && !openImage) return;
         const onKey = (e: KeyboardEvent) => {
-            if (e.key === "Escape") setOpenVideo(null);
+            if (e.key === "Escape") {
+                setOpenVideo(null);
+                setOpenImage(null);
+            }
         };
         window.addEventListener("keydown", onKey);
         const prevOverflow = document.body.style.overflow;
@@ -362,14 +409,17 @@ function App() {
             window.removeEventListener("keydown", onKey);
             document.body.style.overflow = prevOverflow;
         };
-    }, [openVideo]);
+    }, [openVideo, openImage]);
 
     return (
         <>
-            <SpaceParallaxBackground scrollY={scrollY} />
+            <SpaceParallaxBackground
+                scrollY={scrollY}
+                heroDiamondAnchorPct={heroDiamondAnchorPct}
+            />
             {openVideo ? (
                 <div
-                    className="fixed inset-0 z-50 flex items-center justify-center bg-space-void/85 p-4 backdrop-blur-md"
+                    className={MEDIA_MODAL_BACKDROP}
                     role="presentation"
                     onClick={() => setOpenVideo(null)}
                 >
@@ -414,6 +464,40 @@ function App() {
                     </div>
                 </div>
             ) : null}
+            {openImage ? (
+                <div
+                    className={MEDIA_MODAL_BACKDROP}
+                    role="presentation"
+                    onClick={() => setOpenImage(null)}
+                >
+                    <div
+                        className="relative max-h-[min(92vh,920px)] w-full max-w-[min(100%,56rem)] overflow-hidden border border-white/15 bg-space-card shadow-xl shadow-black/40"
+                        role="dialog"
+                        aria-modal="true"
+                        aria-label={openImage.alt || "Enlarged image"}
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <div className="flex justify-end bg-space-card px-2 py-2 sm:px-3">
+                            <button
+                                type="button"
+                                aria-label="Close image"
+                                className="inline-flex size-9 shrink-0 items-center justify-center rounded-full text-zinc-300 transition-colors hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ion-400"
+                                onClick={() => setOpenImage(null)}
+                            >
+                                <CloseIcon className="size-5" />
+                            </button>
+                        </div>
+                        <div className="overflow-auto px-2 pb-3 sm:px-3 sm:pb-4">
+                            <img
+                                src={openImage.src}
+                                alt={openImage.alt}
+                                className="mx-auto max-h-[min(82vh,820px)] w-full object-contain"
+                                decoding="async"
+                            />
+                        </div>
+                    </div>
+                </div>
+            ) : null}
             <header className="pointer-events-none fixed top-0 right-0 left-0 z-40 flex justify-center px-4 pt-4 sm:pt-5">
                 <nav
                     className="pointer-events-auto flex max-w-[min(100%,28rem)] items-center overflow-x-auto rounded-full border border-white/12 bg-space-card/92 shadow-[0_12px_40px_rgba(0,0,0,0.45),0_0_0_1px_rgba(255,255,255,0.06)_inset] backdrop-blur-xl [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:max-w-none"
@@ -436,11 +520,17 @@ function App() {
                     className="hero-intro flex min-h-svh flex-col px-6 pt-[max(5.25rem,env(safe-area-inset-top,0px))] text-center sm:pt-[5.75rem]"
                 >
                     <div className="flex min-h-0 flex-1 flex-col items-center justify-center gap-10 sm:gap-12 translate-y-[var(--hero-diamond-nudge)]">
-                        <img
-                            src={headshot}
-                            alt="Georgia Martinez"
-                            className="size-36 rounded-full object-cover shadow-[0_8px_32px_rgba(0,0,0,0.5)] ring-1 ring-white/45 ring-offset-1 ring-offset-transparent sm:size-44"
-                        />
+                        <div
+                            ref={heroHeadshotAnchorRef}
+                            className="relative mx-auto w-fit shrink-0"
+                        >
+                            <img
+                                src={headshot}
+                                alt="Georgia Martinez"
+                                onLoad={measureHeroDiamondAnchor}
+                                className="relative z-10 size-36 rounded-full object-cover shadow-[0_8px_32px_rgba(0,0,0,0.5)] ring-1 ring-white/45 ring-offset-1 ring-offset-transparent sm:size-44"
+                            />
+                        </div>
 
                         <div className="max-w-xl space-y-2 sm:space-y-3">
                             <h1 className="text-gradient-ion text-balance font-heading text-3xl font-semibold tracking-tight sm:text-4xl md:text-5xl">
@@ -637,16 +727,29 @@ function App() {
                                                                 </span>
                                                             </button>
                                                         ) : (
-                                                            <img
-                                                                src={
-                                                                    project.image
+                                                            <button
+                                                                type="button"
+                                                                className="group relative w-full cursor-zoom-in overflow-hidden border border-white/10 transition-colors hover:border-white/22 focus-visible:border-ion-400/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ion-400"
+                                                                onClick={() =>
+                                                                    setOpenImage(
+                                                                        {
+                                                                            src: project.image!,
+                                                                            alt:
+                                                                                project.imageAlt?.trim() ||
+                                                                                `${project.title} screenshot`,
+                                                                        }
+                                                                    )
                                                                 }
-                                                                alt={
-                                                                    project.imageAlt ??
-                                                                    ""
-                                                                }
-                                                                className="w-full border border-white/10 object-cover object-left"
-                                                            />
+                                                                aria-label={`Enlarge ${project.title} screenshot`}
+                                                            >
+                                                                <img
+                                                                    src={
+                                                                        project.image
+                                                                    }
+                                                                    alt=""
+                                                                    className="pointer-events-none w-full object-cover object-left transition-transform duration-200 group-hover:scale-[1.02]"
+                                                                />
+                                                            </button>
                                                         )}
                                                     </div>
                                                     {project.href ||

@@ -1,7 +1,11 @@
 import type { CSSProperties } from "react";
 
+import { HeroDiamondBackdrop } from "./HeroDiamondBackdrop";
+
 type SpaceParallaxBackgroundProps = {
     scrollY: number;
+    /** Viewport % center of hero headshot — keeps diamond aligned at rest in portrait & landscape */
+    heroDiamondAnchorPct: { x: number; y: number };
 };
 
 /** Deep space base — synced with vignette / fade / index `--background` */
@@ -105,6 +109,7 @@ function speckGradients(specks: readonly Speck[], sizePx: number): string {
 /** Fixed cosmic backdrop: nebula parallax + star speckle + blueprint-style white geometry */
 export function SpaceParallaxBackground({
     scrollY,
+    heroDiamondAnchorPct,
 }: SpaceParallaxBackgroundProps) {
     const nebulaY = scrollY * 0.07;
     const geoY = scrollY * 0.14;
@@ -177,68 +182,23 @@ export function SpaceParallaxBackground({
                 }}
             />
 
-            {/* Geometric white-line layer (inspired by technical / diamond layouts) */}
+            {/* Blueprint diamond — fixed-layer parallax (scrolls slower than page); anchor follows headshot */}
             <div
-                className="absolute inset-0 flex items-center justify-center"
+                className="pointer-events-none absolute inset-0"
                 style={{
                     transform: `translate3d(0, ${geoY}px, 0)`,
                     willChange: "transform",
                 }}
             >
-                <svg
-                    className="h-[min(140vmin,920px)] w-full max-w-[1100px] opacity-[0.9]"
-                    viewBox="0 0 1000 620"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    preserveAspectRatio="xMidYMid meet"
+                <div
+                    className="pointer-events-none absolute aspect-square h-auto w-[min(100vw,56rem)] max-h-[min(92svh,920px)] -translate-x-1/2 -translate-y-1/2 opacity-[0.9]"
+                    style={{
+                        left: `${heroDiamondAnchorPct.x}%`,
+                        top: `${heroDiamondAnchorPct.y}%`,
+                    }}
                 >
-                    <defs>
-                        <pattern
-                            id="space-grid-fine"
-                            width="14"
-                            height="14"
-                            patternUnits="userSpaceOnUse"
-                        >
-                            <circle
-                                cx="1.2"
-                                cy="1.2"
-                                r="0.45"
-                                fill="white"
-                                opacity="0.2"
-                            />
-                        </pattern>
-                    </defs>
-
-                    {/* Large diamond + inner grid */}
-                    <g stroke="white" strokeWidth="1.15" opacity="0.38">
-                        <rect
-                            x="320"
-                            y="110"
-                            width="360"
-                            height="360"
-                            transform="rotate(45 500 290)"
-                            strokeDasharray="4 7"
-                        />
-                        <rect
-                            x="355"
-                            y="145"
-                            width="290"
-                            height="290"
-                            transform="rotate(45 500 290)"
-                            fill="url(#space-grid-fine)"
-                            opacity="0.35"
-                        />
-                        <rect
-                            x="275"
-                            y="65"
-                            width="450"
-                            height="450"
-                            transform="rotate(45 500 290)"
-                            strokeWidth="0.85"
-                            opacity="0.22"
-                        />
-                    </g>
-                </svg>
+                    <HeroDiamondBackdrop className="size-full" />
+                </div>
             </div>
 
             {/* Top fade — hides the hard edge when parallax layers shift down */}

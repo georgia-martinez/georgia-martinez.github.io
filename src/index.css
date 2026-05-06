@@ -29,7 +29,7 @@
 }
 
 :root {
-  /* Hero cluster: vertically centered in viewport, then shifted down to align with SVG diamond */
+  /* Hero cluster: vertically centered in viewport, then nudged down for balance */
   --hero-diamond-nudge: min(11vh, 5.75rem);
 
   --background: #142847;
